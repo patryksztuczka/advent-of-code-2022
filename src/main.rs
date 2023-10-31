@@ -6,14 +6,13 @@ fn main() {
         Err(err) => panic!("Problem reading the file: {}", err)
     };
 
-    let mut max_calories: u32 = 0;
+    let mut v: Vec<u32> = Vec::new();
+
     let mut elf_calories: u32 = 0;
 
     for line in file_content.lines() {
         if line.len() == 0 {
-            if max_calories < elf_calories {
-                max_calories = elf_calories;
-            }
+            v.push(elf_calories);
             elf_calories = 0;
             continue;
         }
@@ -22,9 +21,10 @@ fn main() {
 
         elf_calories += line_value
 
-
     }
 
-    println!("Max calories: {}", max_calories)
+    v.sort();
+
+    println!("Top 3 sum: {}", v.into_iter().rev().take(3).sum::<u32>());
 
 }
